@@ -15,30 +15,23 @@ async function seed() {
     title: 'dune',
     description: 'sand',
     status: 'unread',
-    email: 'fakeemail@fake.com'
+    email: 'fakeemail1@fake.com'
   });
 
   await Book.create({
     title: 'twilight',
     description: 'sparkles',
     status: 'read',
-    email: 'fakeemail@fake.com'
+    email: 'fakeemail2@fake.com'
   });
 
   await Book.create({
     title: 'harry potter',
     description: 'scar',
     status: 'unread',
-    email: 'fakeemail@fake.com'
+    email: 'fakeemail1@fake.com'
   });
 
-  // await myBook.save(function (err) {
-  //     if (err) {
-  //       console.log(err, 'boom');
-  //     } else {
-  //       console.log('saved by dave batista');
-  //     }
-  //   });
 
   mongoose.disconnect();
 }
