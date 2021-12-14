@@ -30,18 +30,18 @@ mongoose.connect(process.env.DB_URL)
 
 async function handleGetBooks(req, res) {
  
-  // let locationFromClient = {}
-  // if (req.query.location) {
-  //   locationFromClient = { location: req.query.location }
-  //   // locationFromClient = req.query
-  // }
+  let emailFromClient = {}
+  if (req.query.email) {
+    emailFromClient.email = req.query.email
+  }
   try {
-    const booksFromDB = await Book.find({});
+    const booksFromDB = await Book.find(emailFromClient);
     if (booksFromDB.length > 0) {
       res.status(200).send(booksFromDB);
       console.log(booksFromDB);
     } else {
       res.status(404).send('no books found');
+      console.log(booksFromDB);
     }
   } catch (e) {
     res.status(500).send('Server Error, try again');
