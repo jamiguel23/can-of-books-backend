@@ -12,22 +12,22 @@ async function seed() {
   });
 
   await Book.create({
-    title: 'Dune',
-    description: 'Sand',
+    title: 'dune',
+    description: 'sand',
     status: 'unread',
     email: 'fakeemail@fake.com'
   });
 
   await Book.create({
-    title: 'Twilight',
-    description: 'Sparkles',
+    title: 'twilight',
+    description: 'sparkles',
     status: 'read',
     email: 'fakeemail@fake.com'
   });
 
   await Book.create({
-    title: 'Harry Potter',
-    description: 'Scar',
+    title: 'harry potter',
+    description: 'scar',
     status: 'unread',
     email: 'fakeemail@fake.com'
   });
