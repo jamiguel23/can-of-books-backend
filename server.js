@@ -6,8 +6,10 @@ const cors = require('cors');
 const mongoose = require('mongoose')
 const Book = require('./bookModel.js')
 
+
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 const PORT = process.env.PORT || 3001;
 const db = mongoose.connection;
@@ -24,6 +26,8 @@ app.get('/test', (request, response) => {
 
 app.get('/books', handleGetBooks)
 mongoose.connect(process.env.DB_URL)
+
+app.post('/books', handlePostBooks)
 
 
 
@@ -48,5 +52,16 @@ async function handleGetBooks(req, res) {
   }
 }
 
+async function handlePostBooks(req, res){
+  // console.log(req.body);
+
+  try {
+    const addedBook = await Book.create(req.body)
+    res.status(201).send(addedBook);
+  }catch (e){
+    res.status(500).send('Server Error, try again');
+  }
+
+}
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
