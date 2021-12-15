@@ -29,6 +29,7 @@ mongoose.connect(process.env.DB_URL)
 
 app.post('/books', handlePostBooks)
 
+app.delete('/books/:id', handleDeleteBooks);
 
 
 
@@ -61,6 +62,21 @@ async function handlePostBooks(req, res){
   }catch (e){
     res.status(500).send('Server Error, try again');
   }
+
+}
+
+async function handleDeleteBooks(req, res){
+  const { id } = req.params;
+  // console.log(id);
+  // res.send('test');
+try {   
+  await Book.findByIdAndDelete(id);
+  res.status(204).send('book deleted');
+  console.log(id);
+} catch (error) {
+  res.status(500).send('unable to delete: server side error');
+}
+
 
 }
 
