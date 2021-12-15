@@ -27,11 +27,11 @@ app.get('/test', (request, response) => {
 app.get('/books', handleGetBooks)
 mongoose.connect(process.env.DB_URL)
 
-app.post('/books', handlePostBooks)
+app.post('/books', handlePostBooks);
 
 app.delete('/books/:id', handleDeleteBooks);
 
-
+app.put('/books/:id', handlePutBooks);
 
 async function handleGetBooks(req, res) {
  
@@ -54,8 +54,7 @@ async function handleGetBooks(req, res) {
 }
 
 async function handlePostBooks(req, res){
-  // console.log(req.body);
-
+  
   try {
     const addedBook = await Book.create(req.body)
     res.status(201).send(addedBook);
@@ -67,16 +66,33 @@ async function handlePostBooks(req, res){
 
 async function handleDeleteBooks(req, res){
   const { id } = req.params;
+  const { email } = req.query;
   // console.log(id);
   // res.send('test');
 try {   
-  await Book.findByIdAndDelete(id);
-  res.status(204).send('book deleted');
-  console.log(id);
+  const book = await Book.findOne({ _id: id, email });
+  if (!book) res.status(400).send("unable to delete book")
+  else {
+    await Book.findByIdAndDelete(id);
+    res.status(204).send('book deleted');
+    console.log(id);
+  }
+
 } catch (error) {
   res.status(500).send('unable to delete: server side error');
 }
+}
 
+async function handlePutBooks(req, res){
+
+  const { id } = req.params;
+
+  try {
+    const addedBook = await Book.findByIdAndUpdate(id, req.body, { new: true, overwrite: true });
+    res.status(200).send(addedBook);
+  }catch (e){
+    res.status(500).send('Server Error, try again');
+  }
 
 }
 
