@@ -87,7 +87,7 @@ async function handleUpdate(req, res){
   // console.log(id);
   // res.send('test');
 try {   
-  const updatedBook = await Book.findByIdAndUpdate(id, req.body);
+  const updatedBook = await Book.findByIdAndUpdate(id, req.body, {new: true, overwrite: true});
   res.status(201).send(updatedBook);
   console.log(id);
 } catch (error) {
