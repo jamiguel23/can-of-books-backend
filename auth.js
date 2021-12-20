@@ -20,7 +20,7 @@ function verifyUser(req, errFirstOrUserCallbackFunction) {
   try{
     const token = req.headers.authorization.split(' ')[1];
     console.log(token);
-    jwt.verify(token, getKey, {}, errorUserCallback)
+    jwt.verify(token, getKey, {}, errFirstOrUserCallbackFunction)
   }catch (error){
     errFirstOrUserCallbackFunction('not authorized')
   }
